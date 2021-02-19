@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: egress-allow-internal
+  namespace: rce
+spec:
+  podSelector:
+    matchLabels:
+      app: rce
+  policyTypes:
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.0.0.0/8
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.0.0.0/8
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: egress-deny-all
+  namespace: rce 
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress

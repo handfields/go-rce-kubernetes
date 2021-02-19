@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rce  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rce
+  namespace: rce 
+spec:
+  selector:
+    matchLabels:
+      app: rce
+  template:
+    metadata:
+      labels:
+        app: rce
+    spec:
+      serviceAccount: cert-rotate
+      containers:
+      - name: go-rce
+        imagePullPolicy: Always
+        image: 101e/go-rce:debian
+        resources:
+          limits:
+            memory: 128Mi
+            cpu: 100m
+        ports:
+        - containerPort: 8080
+  strategy: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rce 
+  namespace: rce
+spec:
+  selector:
+    app: rce
+  ports:
+  - name: go-rce
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: LoadBalancer
+---

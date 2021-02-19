@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rce  
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cert-rotate
+  namespace: rce
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cert-rotate-role
+  namespace: rce
+rules:
+  - apiGroups: ["certificates.k8s.io"]
+    resources: ["*"]
+    verbs: ["*"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: cert-rotate-role-binding
+  namespace: rce
+subjects:
+  - kind: ServiceAccount
+    name: cert-rotate
+    namespace: rce
+roleRef:
+  kind: ClusterRole
+  name: cert-rotate-role
+  apiGroup: rbac.authorization.k8s.io
+---
