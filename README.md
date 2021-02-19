@@ -140,15 +140,15 @@ This section introduces some general best practice guildlines for operating secu
     - Ensure logs are being shipped and analyzed for security issues
 
 ### Additional guidance, helpful tools and resources 
-https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html 
-https://github.com/OWASP/Docker-Security 
-https://www.nist.gov/publications/application-container-security-guide 
-https://github.com/open-policy-agent/
-https://github.com/ManicodeSecurity/Defending-DevOps 
-https://github.com/ksoclabs/kube-goat 
-https://github.com/aquasecurity
-https://github.com/falcosecurity/falco
-https://github.com/cyberark/KubiScan
-https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/
-https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/
-https://github.com/trailofbits/audit-kubernetes/tree/master/reports
+https://cheatsheetseries.owasp.org/cheatsheets/Kubernetes_Security_Cheat_Sheet.html<br>
+https://github.com/OWASP/Docker-Security<br>
+https://www.nist.gov/publications/application-container-security-guide <br>
+https://github.com/open-policy-agent/<br>
+https://github.com/ManicodeSecurity/Defending-DevOps <br>
+https://github.com/ksoclabs/kube-goat <br>
+https://github.com/aquasecurity<br>
+https://github.com/falcosecurity/falco<br>
+https://github.com/cyberark/KubiScan<br>
+https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/<br>
+https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/<br>
+https://github.com/trailofbits/audit-kubernetes/tree/master/reports<br>
