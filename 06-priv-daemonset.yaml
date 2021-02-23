@@ -27,7 +27,8 @@ spec:
       containers:
       - name: mallory
         image: debian:buster-slim
-        command: ["sleep 10000"]
+        command: ["sleep"]
+        args: ["10000"]
         volumeMounts:
         - name: host
           mountPath: /host
