@@ -8,6 +8,12 @@ import (
 )
 
 // Basic RCE example
+
+// This code is intentionally writen poorly. If you see this in production -> RUN! :)
+
+// Neither the code, nor the vulnerability are the focus of this repository (for now).
+// Please refer to the README for more information.
+
 func main() {
 	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
 		if r.URL.RawQuery != "" && r.URL.Path != "" {

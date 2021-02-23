@@ -5,10 +5,9 @@ ADD . /go/src/app
 
 RUN go build -o /go/bin/app 
 
+# CMD ["/go/bin/app"]
 
-
-# multi-stage build example
-
+# Example of a multi-stage build using slim base image, running non-root (security +100)
 FROM gcr.io/distroless/base-debian10:nonroot
 COPY --from=build /go/bin/app /go/bin/app
 USER nonroot

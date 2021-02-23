@@ -30,7 +30,12 @@ The new OWASP waterloo chapter leads and security enthustists
 # Getting started
 
 ## Pre-requisites 
-This project assumes you have access to a running kubernetes cluster 
+This project assumes you have access to a running Kubernetes cluster. If you are new to Kubernetes and need assistance setting up a cluster, please look into the following options for running a local cluster: 
+* [Docker-desktop](https://www.docker.com/products/kubernetes)
+* [Rancher K3os](https://github.com/rancher/k3os) 
+* [minikube](https://minikube.sigs.k8s.io/docs/)
+* [kubeadm](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/)
+
 
 ## Build and run 
 The following steps outline building and running the simulations: 
@@ -43,6 +48,10 @@ git clone github.com/handfields/go-rce-kubernetes
 cd go-rce-kubernetes && docker build . 
 ```
 3. Deploy 
+```
+kubectl apply -f ./
+```
+
 4. Exploit 
  - The go-rce applicaion takes untrusted data from users as command line arguments and redirect
  - Open a browser to the following link (Replace hostname and port with the external IP/port of the kubernetes service) <br>
