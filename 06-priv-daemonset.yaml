@@ -19,14 +19,15 @@ spec:
       labels:
         name: mallory
     spec:
-      # tolerations:
-      # # this toleration is to have the daemonset runnable on master nodes
-      # # remove it if your masters can't run pods
-      # - key: node-role.kubernetes.io/master
-      #   effect: NoSchedule
+      tolerations:
+      # this toleration is to have the daemonset runnable on master nodes
+      # remove it if your masters can't run pods
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
       containers:
       - name: mallory
         image: debian:buster-slim
+        command: ["sleep 10000"]
         volumeMounts:
         - name: host
           mountPath: /host
