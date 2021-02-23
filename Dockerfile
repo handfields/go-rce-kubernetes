@@ -1,7 +1,7 @@
 FROM golang:1.15-buster as build
 
 WORKDIR /go/src/app
-ADD . /go/src/app
+ADD ./go-ugly-app.go /go/src/app
 
 RUN go build -o /go/bin/app 
 
