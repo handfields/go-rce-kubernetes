@@ -1,0 +1,41 @@
+# Source -> https://github.com/open-policy-agent/gatekeeper-library/blob/master/library/pod-security-policy/host-namespaces/template.yaml
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sPSPHostNamespace
+metadata:
+  name: host-namespace-deny
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces:
+      - "rce"
+---
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8spsphostnamespace
+  annotations:
+    description: Controls usage of host namespaces.
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sPSPHostNamespace
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8spsphostnamespace
+
+        violation[{"msg": msg, "details": {}}] {
+            input_share_hostnamespace(input.review.object)
+            msg := sprintf("Sharing the host namespace is not allowed: %v", [input.review.object.metadata.name])
+        }
+
+        input_share_hostnamespace(o) {
+            o.spec.hostPID
+        }
+        input_share_hostnamespace(o) {
+            o.spec.hostIPC
+        }
+---
