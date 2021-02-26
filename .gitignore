@@ -15,3 +15,5 @@
 # vendor/
 *.ignore
 *.pub
+*.tar.gz
+*.tar
