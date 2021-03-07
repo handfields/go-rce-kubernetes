@@ -75,7 +75,7 @@ kubectl apply -f 01-rce-deployment-bad.yaml
   ```
 - explore ..
    ```
-   curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl && chmod 700 kubectl
+   curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.5/bin/linux/amd64/kubectl && chmod 700 kubectl
  
    ./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt --server='https://kubernetes.default.svc.cluster.local' get pods
    ```
@@ -93,7 +93,7 @@ Generate and sign client certificate with elevated permissions
  
 ```bash
 # download tools
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl && chmod 700 kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.5/bin/linux/amd64/kubectl && chmod 700 kubectl
 curl -Lo cfssl https://github.com/cloudflare/cfssl/releases/download/v1.5.0/cfssl_1.5.0_linux_amd64 && chmod 700 cfssl
 curl -Lo cfssljson https://github.com/cloudflare/cfssl/releases/download/v1.5.0/cfssljson_1.5.0_linux_amd64 && chmod 700 cfssljson
  
