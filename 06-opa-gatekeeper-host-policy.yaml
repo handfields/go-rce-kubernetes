@@ -9,7 +9,7 @@ spec:
       - apiGroups: [""]
         kinds: ["Pod"]
     namespaces:
-      - "rce"
+      - "*"
 ---
 apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate

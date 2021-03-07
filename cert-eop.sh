@@ -76,3 +76,4 @@ EOF
 
 # test
 ./kubectl --kubeconfig=config get pods -A
+

@@ -1,13 +1,13 @@
-# apiVersion: v1
-# kind: Namespace
-# metadata:
-#   name: mallory  
-# ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mallory  
+---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: mallory
-  # namespace: mallory
+  namespace: mallory
   labels:
     k8s-app: mallory
 spec:
