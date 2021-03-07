@@ -4,7 +4,7 @@ First and foremost, Welcome! :tada::confetti_ball:
  
 Thank you for visiting the go-rce-kubernetes project repository. :balloon::balloon::balloon:
  
-:warning::bangbang: ** DISCLAIMER: This repo is for educational purposes only. By using this repo and/or data herein, you agree to ASSUME ALL RESPONSIBILITY FOR THE RESULTS AND/OR USE OF THE MATERIALS. **
+#### :warning::bangbang: DISCLAIMER: This repo is for educational purposes only. By using this repo and/or data herein, you agree to ASSUME ALL RESPONSIBILITY FOR THE RESULTS AND/OR USE OF THE MATERIALS. 
  
 This document (the README file) is a hub to give you some information about the project. Jump straight to one of the sections below, or just scroll down to find out more.
  
