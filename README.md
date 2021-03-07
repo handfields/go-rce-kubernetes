@@ -4,7 +4,7 @@ First and foremost, Welcome! :tada::confetti_ball:
  
 Thank you for visiting the go-rce-kubernetes project repository. :balloon::balloon::balloon:
  
-:warning::bangbang: | DISCLAIMER: This repo is for educational purposes only. By using this repo and/or data herein, you agree to ASSUME ALL RESPONSIBILITY FOR THE RESULTS AND/OR USE OF THE MATERIALS. :---: | :---
+:warning::bangbang: ** DISCLAIMER: This repo is for educational purposes only. By using this repo and/or data herein, you agree to ASSUME ALL RESPONSIBILITY FOR THE RESULTS AND/OR USE OF THE MATERIALS. **
  
 This document (the README file) is a hub to give you some information about the project. Jump straight to one of the sections below, or just scroll down to find out more.
  
@@ -91,7 +91,7 @@ Generate and sign client certificate with elevated permissions
 >  ```
 > 
  
-```
+```bash
 # download tools
 curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.0/bin/linux/amd64/kubectl && chmod 700 kubectl
 curl -Lo cfssl https://github.com/cloudflare/cfssl/releases/download/v1.5.0/cfssl_1.5.0_linux_amd64 && chmod 700 cfssl
@@ -171,7 +171,7 @@ EOF
 ```
  
 7. Perform lateral movement (Escape pod using privileged container)
-```
+```bash
 #####
 # Option 1 - install privileged container (using nsenter)
 #####
