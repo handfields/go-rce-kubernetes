@@ -1,0 +1,10 @@
+- op: replace
+  path: /spec/match
+  value:
+    excludedNamespaces:
+      - kube-system
+      - cert-manager
+      - gatekeeper-system
+    kinds: 
+      - apiGroups: [""]
+        kinds: ["Pod"] 

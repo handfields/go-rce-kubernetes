@@ -1,0 +1,26 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8scsrdeny
+  annotations:
+    description: Restrict access to Kubernetes Certificate Authority
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sCSRDeny
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          properties:
+            signerName:
+              type: string       
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8scsrdeny
+        
+        violation[{"msg": msg}] {
+          input.review.object.spec.signerName == input.parameters.signerName
+          msg := sprintf("Certificate signing request is prohibited | Name: %v | User: %v ", [input.review.object.metadata.name, input.review.object.spec.username]) 
+        } 

